@@ -15,12 +15,12 @@ function createFigure(imageURL, title, id) {
   }
   function createFigureModal(imageURL, title, id) {
     return `
-      <div class="modal-flex">
-        <div class="icon-flex">
-          <i class="move fa-solid fa-arrows-up-down-left-right"></i>
-          <i class="trash fa-solid fa-trash-can"></i>
-        </div>
-        <figure data-id="${id}">
+      <div class="modal-flex">     
+        <figure data-id="${id} class="modal-flex">
+          <div class="icon-flex">
+            <i class="move fa-solid fa-arrows-up-down-left-right"></i>
+            <i class="trash fa-solid fa-trash-can"></i>
+          </div>
           <img src="${imageURL}" alt="${title}">
           <figcaption>éditer</figcaption>
         </figure>
@@ -32,13 +32,11 @@ function createInput(name, id) {
     <input type="submit" value="${name}" data-id="${id}"> 
   `
 }
-
 async function getWorksAsync() {
   const response = await fetch("http://localhost:5678/api/works");
   works = await response.json();
   createWorks(works);
 }
-
 function getWorksWithThen() {
   fetch("http://localhost:5678/api/works") // Call the fetch function passing the url of the API as a parameter
     .then(response => response.json()) // Extract the JSON body content from the response
@@ -47,15 +45,13 @@ function getWorksWithThen() {
       works = data;
       createWorks(works);
       createModalGallery(works);
+      addDeletionEvents();
     });
 } 
-
 document.addEventListener("DOMContentLoaded", () => {
   getWorksWithThen(); 
   addDynamicFilter();
 });
-
-
 function addDynamicFilter() {
   fetch('http://localhost:5678/api/categories')
     .then(response => response.json())
@@ -72,7 +68,6 @@ function addDynamicFilter() {
     });
     
 }
-
 function addEventFilter() {
   const filters = document.querySelectorAll(".categories input[type='submit']");
   console.log(filters);
@@ -80,7 +75,6 @@ function addEventFilter() {
     filter.addEventListener("click", filterCategory);
   }
 }
-
 function filterCategory(event) {  
   const id = Number(event.target.dataset.id);
   if (id) {
@@ -94,8 +88,8 @@ function filterCategory(event) {
 function createWorks(works) {
   const gallery =  document.querySelector(".gallery");
   gallery.innerHTML = "";
-  works.forEach(({ imageUrl, title }) => {
-    const figure = createFigure(imageUrl, title);
+  works.forEach(({ imageUrl, title, id }) => {
+    const figure = createFigure(imageUrl, title, id);
     gallery.innerHTML += figure;
   });
 }
@@ -104,8 +98,8 @@ function createModalGallery(works) {
   const modalGallery = document.querySelector(".modal-gallery");
   console.log(modalGallery);
   modalGallery.innerHTML ="";
-  works.forEach(({ imageUrl, title }) => {
-    const figureModal = createFigureModal(imageUrl, title);
+  works.forEach(({ imageUrl, title, id }) => {
+    const figureModal = createFigureModal(imageUrl, title, id);
     modalGallery.innerHTML += figureModal;
   });
 }
@@ -143,8 +137,15 @@ function addDeletionEvents() {
 }
 
 async function deleteAndRenderWork() {
-  const { id } = this.parentElement.dataset;
+  const { id } = this.parentElement.parentElement.dataset;
   await deleteWork(id);
   document.querySelector(`.modal-gallery figure[data-id="${id}"]`).remove();
   document.querySelector(`.gallery figure[data-id="${id}"]`).remove();
+}
+
+function deleteAllWorks() {
+  const deleteGallery = document.querySelector(".deleteGallery")
+  deleteButton = addEventListener('click', () => {
+    
+  })
 }
