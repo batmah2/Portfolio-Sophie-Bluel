@@ -4,6 +4,7 @@ let works;
  * Fonction to create a figure element.
  * @param {string} imageURL - The URL of the image.
  * @param {string} title - The title of the image.
+ * @param id - The id of the image.
  */
 function createFigure(imageURL, title, id) {
     return `
@@ -15,16 +16,14 @@ function createFigure(imageURL, title, id) {
   }
   function createFigureModal(imageURL, title, id) {
     return `
-      <div class="modal-flex">     
-        <figure data-id="${id} class="modal-flex">
-          <div class="icon-flex">
+        <figure data-id="${id}" class="modal-flex">
+           <div class="icon-flex">
             <i class="move fa-solid fa-arrows-up-down-left-right"></i>
             <i class="trash fa-solid fa-trash-can"></i>
           </div>
           <img src="${imageURL}" alt="${title}">
           <figcaption>éditer</figcaption>
         </figure>
-      </div>
     `;
   }
 function createInput(name, id) {
@@ -32,42 +31,47 @@ function createInput(name, id) {
     <input type="submit" value="${name}" data-id="${id}"> 
   `
 }
+
 async function getWorksAsync() {
   const response = await fetch("http://localhost:5678/api/works");
   works = await response.json();
   createWorks(works);
 }
+
 function getWorksWithThen() {
   fetch("http://localhost:5678/api/works") // Call the fetch function passing the url of the API as a parameter
     .then(response => response.json()) // Extract the JSON body content from the response
     .then(data => {
-      // Loop over the works and create a figure for each work:      
+      // Loop over the works and create a figure for each work:
       works = data;
       createWorks(works);
       createModalGallery(works);
-      addDeletionEvents();
     });
-} 
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  getWorksWithThen(); 
+  getWorksWithThen();
   addDynamicFilter();
 });
+
+
 function addDynamicFilter() {
   fetch('http://localhost:5678/api/categories')
     .then(response => response.json())
     .then(data => {
       console.log(data);
       for (let categorie of data) {
-        const categories = document.querySelector(".categories");           
+        const categories = document.querySelector(".categories");
         categories.innerHTML += createInput(categorie.name, categorie.id);
-      } 
-      addEventFilter();       
+      }
+      addEventFilter();
     })
     .catch(error => {
       console.error('Une erreur s\'est produite lors de la récupération des données :', error);
     });
-    
+
 }
+
 function addEventFilter() {
   const filters = document.querySelectorAll(".categories input[type='submit']");
   console.log(filters);
@@ -75,7 +79,8 @@ function addEventFilter() {
     filter.addEventListener("click", filterCategory);
   }
 }
-function filterCategory(event) {  
+
+function filterCategory(event) {
   const id = Number(event.target.dataset.id);
   if (id) {
     const filteredWorks = works.filter(work => work.categoryId === id);
@@ -102,6 +107,7 @@ function createModalGallery(works) {
     const figureModal = createFigureModal(imageUrl, title, id);
     modalGallery.innerHTML += figureModal;
   });
+  addDeletionEvents();
 }
 async function deleteWork(id) {
   const token = sessionStorage.getItem("token");
@@ -134,18 +140,37 @@ function addDeletionEvents() {
     trash.removeEventListener("click", deleteAndRenderWork);
     trash.addEventListener("click", deleteAndRenderWork);
   }
+  addDeleteAllEvent();
 }
 
 async function deleteAndRenderWork() {
   const { id } = this.parentElement.parentElement.dataset;
+  console.log(id);
   await deleteWork(id);
   document.querySelector(`.modal-gallery figure[data-id="${id}"]`).remove();
   document.querySelector(`.gallery figure[data-id="${id}"]`).remove();
 }
 
-function deleteAllWorks() {
-  const deleteGallery = document.querySelector(".deleteGallery")
-  deleteButton = addEventListener('click', () => {
-    
-  })
+function addDeleteAllEvent() {
+  const deletionButton = document.querySelector(".deleteGallery");
+  deletionButton.addEventListener("click", () => {
+    const confirmation = confirm("Voulez-vous vraiment supprimer tous les travaux ?");
+    if (confirmation) {
+      // Sélectionner le bouton de suppression
+      // Ajouter un écouteur d'événement sur le bouton
+      // Dans la fonction de callback, appeler la fonction deleteWork sur chaque work
+      // Une fois que tous les travaux sont supprimés, supprimer les figures de la galerie :
+      // -- Réinitialiser le innerHTML de la galerie
+      // -- Relancer la function createWorks() après avoir mis à jour la variable works ([] vide)
+    }
+  });
 }
+
+// AJOUTER UNE PHOTO
+// Faire apparaitre le formulaire au sein de la modale
+// Ajouter une fonction de prévisualisation de l'image (en remplaçant l'input par l'image)
+// Ajouter un écouteur d'événement sur le bouton d'ajout
+// Dans la fonction de callback, récupérer les données du formulaire (FormData)
+// Envoyer les données au serveur
+
+// AFFICHER LE MODE EDITION UNIQUEMENT POUR UN UTILISATEUR CONNECTE
