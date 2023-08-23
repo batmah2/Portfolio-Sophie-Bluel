@@ -152,16 +152,17 @@ async function deleteAndRenderWork() {
 }
 
 function addDeleteAllEvent() {
-  const deletionButton = document.querySelector(".deleteGallery");
-  deletionButton.addEventListener("click", () => {
+  const deletionButton = document.querySelector(".deleteGallery"); // Sélectionner le bouton de suppression
+  deletionButton.addEventListener("click", () => { // Ajouter un écouteur d'événement sur le bouton
     const confirmation = confirm("Voulez-vous vraiment supprimer tous les travaux ?");
     if (confirmation) {
-      // Sélectionner le bouton de suppression
-      // Ajouter un écouteur d'événement sur le bouton
-      // Dans la fonction de callback, appeler la fonction deleteWork sur chaque work
-      // Une fois que tous les travaux sont supprimés, supprimer les figures de la galerie :
-      // -- Réinitialiser le innerHTML de la galerie
-      // -- Relancer la function createWorks() après avoir mis à jour la variable works ([] vide)
+      for (let work of works) { // Dans la fonction de callback, appeler la fonction deleteWork sur chaque work
+        deleteWork(work.id);
+      }
+      const gallery = document.querySelector(".gallery"); // Une fois que tous les travaux sont supprimés, supprimer les figures de la galerie :
+      gallery.innerHTML = ""; // -- Réinitialiser le innerHTML de la galerie
+      works = [];
+      createWorks(works); // -- Relancer la function createWorks() après avoir mis à jour la variable works ([] vide)            
     }
   });
 }
@@ -174,3 +175,19 @@ function addDeleteAllEvent() {
 // Envoyer les données au serveur
 
 // AFFICHER LE MODE EDITION UNIQUEMENT POUR UN UTILISATEUR CONNECTE
+function checkToken() {
+  const token = sessionStorage.getItem("user.token");
+  if (token) {
+    activateEditionMode();
+  }
+}
+function activateEditionMode() {
+  const logoutLink = document.getElementById("logout-link");
+  logoutLink.style.display = "block";
+  logoutLink.addEventListener("click", logout);
+
+  document.getElementById(".edition-mod").style.display = "block";
+  document.getElementById("login-link").style.display = "none";
+  document.querySelector(".intro-logo").style.display = "block";
+  document.querySelector(".categories").style.display = "none";
+}

@@ -16,7 +16,7 @@
 <body>
 <header>
 	<div class="flex-header">
-		<div class="edition-mod flex-edition">
+		<div id="edition-mod" class="flex-edition">
 			<i class="fa-regular fa-pen-to-square"></i>
 			<p>Mode édition</p>
 			<input type="button" value ="publier les changements">
@@ -27,7 +27,8 @@
 				<ul>
 					<li>projets</li>
 					<li>contact</li>
-					<li class="activateLogout"><a href="login.html">login</a></li>
+					<li id="login-link"><a href="login.html">login</a></li>
+					<li id="logout-link"><a href="#">logout</a></li>
 					<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 				</ul>
 			</nav>
@@ -38,9 +39,9 @@
 	<section id="introduction">
 		<div class="position-intro">
 			<figure class="img-width">
-				<img src="./assets/images/sophie-bluel.png" alt="">
+				<img class="intro-logo" src="./assets/images/sophie-bluel.png" alt="">
 			</figure>
-			<figcaption class="edition-mod flex-edition-caption position-caption">
+			<figcaption id="edition-mod" class="flex-edition-caption position-caption">
 					<i class="fa-regular fa-pen-to-square"></i>
 					<button class="openModal">Modifier</button>
 			</figcaption>
@@ -67,7 +68,7 @@
 	<section id="portfolio">
 		<div class="flex-edition-project">
 			<h2>Mes Projets</h2>
-			<div class="edition-mod flex-modification">		
+			<div id="edition-mod" class="flex-modification">		
 				<i class="fa-regular fa-pen-to-square"></i>
 				<button class="openModal">Modifier</button>
 			</div>
