@@ -7,15 +7,15 @@ let works;
  * @param id - The id of the image.
  */
 function createFigure(imageURL, title, id) {
-    return `
+  return `
       <figure data-id=${id}>
         <img src="${imageURL}" alt="${title}">
         <figcaption>${title}</figcaption>
       </figure>
-  `
-  }
-  function createFigureModal(imageURL, title, id) {
-    return `
+  `;
+}
+function createFigureModal(imageURL, title, id) {
+  return `
         <figure data-id="${id}" class="modal-flex">
            <div class="icon-flex">
             <i class="move fa-solid fa-arrows-up-down-left-right"></i>
@@ -25,11 +25,11 @@ function createFigure(imageURL, title, id) {
           <figcaption>éditer</figcaption>
         </figure>
     `;
-  }
+}
 function createInput(name, id) {
   return `
     <input type="submit" value="${name}" data-id="${id}"> 
-  `
+  `;
 }
 
 async function getWorksAsync() {
@@ -40,8 +40,8 @@ async function getWorksAsync() {
 
 function getWorksWithThen() {
   fetch("http://localhost:5678/api/works") // Call the fetch function passing the url of the API as a parameter
-    .then(response => response.json()) // Extract the JSON body content from the response
-    .then(data => {
+    .then((response) => response.json()) // Extract the JSON body content from the response
+    .then((data) => {
       // Loop over the works and create a figure for each work:
       works = data;
       createWorks(works);
@@ -52,13 +52,13 @@ function getWorksWithThen() {
 document.addEventListener("DOMContentLoaded", () => {
   getWorksWithThen();
   addDynamicFilter();
+  checkToken();
 });
 
-
 function addDynamicFilter() {
-  fetch('http://localhost:5678/api/categories')
-    .then(response => response.json())
-    .then(data => {
+  fetch("http://localhost:5678/api/categories")
+    .then((response) => response.json())
+    .then((data) => {
       console.log(data);
       for (let categorie of data) {
         const categories = document.querySelector(".categories");
@@ -66,10 +66,12 @@ function addDynamicFilter() {
       }
       addEventFilter();
     })
-    .catch(error => {
-      console.error('Une erreur s\'est produite lors de la récupération des données :', error);
+    .catch((error) => {
+      console.error(
+        "Une erreur s'est produite lors de la récupération des données :",
+        error
+      );
     });
-
 }
 
 function addEventFilter() {
@@ -83,15 +85,15 @@ function addEventFilter() {
 function filterCategory(event) {
   const id = Number(event.target.dataset.id);
   if (id) {
-    const filteredWorks = works.filter(work => work.categoryId === id);
-  createWorks(filteredWorks);
+    const filteredWorks = works.filter((work) => work.categoryId === id);
+    createWorks(filteredWorks);
   } else {
     createWorks(works);
-  };
+  }
 }
 
 function createWorks(works) {
-  const gallery =  document.querySelector(".gallery");
+  const gallery = document.querySelector(".gallery");
   gallery.innerHTML = "";
   works.forEach(({ imageUrl, title, id }) => {
     const figure = createFigure(imageUrl, title, id);
@@ -102,7 +104,7 @@ function createWorks(works) {
 function createModalGallery(works) {
   const modalGallery = document.querySelector(".modal-gallery");
   console.log(modalGallery);
-  modalGallery.innerHTML ="";
+  modalGallery.innerHTML = "";
   works.forEach(({ imageUrl, title, id }) => {
     const figureModal = createFigureModal(imageUrl, title, id);
     modalGallery.innerHTML += figureModal;
@@ -116,8 +118,8 @@ async function deleteWork(id) {
       const response = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -153,21 +155,149 @@ async function deleteAndRenderWork() {
 
 function addDeleteAllEvent() {
   const deletionButton = document.querySelector(".deleteGallery"); // Sélectionner le bouton de suppression
-  deletionButton.addEventListener("click", () => { // Ajouter un écouteur d'événement sur le bouton
-    const confirmation = confirm("Voulez-vous vraiment supprimer tous les travaux ?");
+  deletionButton.addEventListener("click", () => {
+    // Ajouter un écouteur d'événement sur le bouton
+    const confirmation = confirm(
+      "Voulez-vous vraiment supprimer tous les travaux ?"
+    );
     if (confirmation) {
-      for (let work of works) { // Dans la fonction de callback, appeler la fonction deleteWork sur chaque work
+      for (let work of works) {
+        // Dans la fonction de callback, appeler la fonction deleteWork sur chaque work
         deleteWork(work.id);
       }
-      const gallery = document.querySelector(".gallery"); // Une fois que tous les travaux sont supprimés, supprimer les figures de la galerie :
-      gallery.innerHTML = ""; // -- Réinitialiser le innerHTML de la galerie
       works = [];
-      createWorks(works); // -- Relancer la function createWorks() après avoir mis à jour la variable works ([] vide)            
+      createWorks(works); // -- Relancer la function createWorks() après avoir mis à jour la variable works ([] vide)
     }
   });
 }
 
 // AJOUTER UNE PHOTO
+async function createWork(form) {
+  const token = sessionStorage.getItem("token");
+  if (token) {
+    try {
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: form,
+      });
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  return null;
+}
+//Ajouter des works
+const form = document.querySelector(".inner-modal-form");
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const work = await createWork(formData);
+  data.works.push(work);
+  createAndRenderFigure(work);
+  addDeletionEvents();
+  clearModal();
+});
+
+//Vérifications avant l'ajout de nouveaux travaux :
+
+const fileTooBig = document.querySelector(".file-too-big");
+const imagePreviewContainer = document.querySelector(".ajout-photo");
+const image = new Image();
+const workCategory = document.querySelector(".inner-modal-form #category");
+const workTitle = document.querySelector(".inner-modal-form #title");
+const workImage = document.getElementById("fil e");
+const modalSubmit = document.querySelector(".modal-submit");
+
+//Verifier si la  taille ne dépasse pas les 4 mo
+function validateFileSize(event) {
+  const file = event.target.files[0];
+  const maxFileSize = 4 * 1024 * 1024; // 4 Mo en octets
+
+  if (file && file.size > maxFileSize) {
+    // Afficher un message d'erreur
+    fileTooBig.style.display = "block";
+    event.target.value = "";
+  } else {
+    // Appeler la fonction previewImage si la taille est valide
+    previewImage();
+  }
+}
+
+//Faire apparaitre la miniature dans la modale
+function previewImage() {
+  const file = workImage.files[0];
+
+  if (file.type.match("image.*")) {
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function (event) {
+      const imageUrl = event.target.result;
+
+      image.addEventListener("load", function () {
+        for (let child of imagePreviewContainer.children) {
+          child.style.display = "none";
+        }
+        imagePreviewContainer.appendChild(image);
+      });
+
+      image.src = imageUrl;
+      image.style.width = "129px";
+      image.style.height = "169px";
+    });
+    reader.readAsDataURL(file);
+  }
+}
+
+//Création d'un tableau pour stocker les inputs
+const inputs = [workCategory, workTitle, workImage];
+for (let input of inputs) {
+  input.addEventListener("input", function () {
+    validateInputs();
+  });
+}
+
+// Vérification de chaque champ d'entrée
+function validateInputs() {
+  if (workImage.files[0] && Number(workCategory.value) && workTitle.value) {
+    modalSubmit.style.backgroundColor = "#1D6154";
+  } else {
+    modalSubmit.style.backgroundColor = "#A7A7A7";
+  }
+}
+
+//Ferme et vide la modale après validation pour un nouvel ajout
+function clearModal() {
+  secondModal.style.display = "none";
+  imagePreviewContainer.removeChild(image);
+  for (let child of imagePreviewContainer.children) {
+    child.style.display = "block";
+  }
+  fileTooBig.style.display = "none";
+  workTitle.value = "";
+  workCategory.value = "";
+  modalSubmit.style.backgroundColor = "#A7A7A7";
+}
+
+//Supprimer toute la galerie
+const deleteAllButton = document.querySelector(".delete-all");
+deleteAllButton.addEventListener("click", deleteAllWorks);
+
+async function deleteAllWorks() {
+  const confirmation = confirm(
+    "Etes vous certain de vouloir supprimer tous les éléments de la gallerie ?"
+  );
+  if (confirmation) {
+    for (let work of data.works) {
+      await deleteWork(work.id);
+    }
+    data.works = [];
+    renderFigures();
+  }
+}
 // Faire apparaitre le formulaire au sein de la modale
 // Ajouter une fonction de prévisualisation de l'image (en remplaçant l'input par l'image)
 // Ajouter un écouteur d'événement sur le bouton d'ajout
@@ -176,18 +306,27 @@ function addDeleteAllEvent() {
 
 // AFFICHER LE MODE EDITION UNIQUEMENT POUR UN UTILISATEUR CONNECTE
 function checkToken() {
-  const token = sessionStorage.getItem("user.token");
+  const token = sessionStorage.getItem("token");
+  console.log(token);
   if (token) {
     activateEditionMode();
   }
 }
 function activateEditionMode() {
+  console.log("Mode édition activé");
   const logoutLink = document.getElementById("logout-link");
   logoutLink.style.display = "block";
   logoutLink.addEventListener("click", logout);
 
-  document.getElementById(".edition-mod").style.display = "block";
+  document.querySelectorAll(".edition-mod").forEach((element) => {
+    element.classList.remove("edition-mod");
+  });
   document.getElementById("login-link").style.display = "none";
   document.querySelector(".intro-logo").style.display = "block";
   document.querySelector(".categories").style.display = "none";
+}
+
+function logout() {
+  sessionStorage.removeItem("token");
+  window.location = "index.html";
 }
