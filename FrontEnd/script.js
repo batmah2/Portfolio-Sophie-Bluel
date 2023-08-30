@@ -196,12 +196,39 @@ form.addEventListener("submit", async function (e) {
   e.preventDefault();
   const formData = new FormData(form);
   const work = await createWork(formData);
-  data.works.push(work);
-  createAndRenderFigure(work);
-  addDeletionEvents();
+  works.push(work);
+  createGallery(work);
+  createModalGallery();
   clearModal();
 });
 
+// ajouter recuperation des categories dans l'input
+const categorySelect = document.getElementById("category");
+
+// Effectuez une requête à votre API pour obtenir la liste des catégories
+// Remarque : Vous devrez remplacer l'URL de l'API par la vôtre.
+fetch("http://localhost:5678/api/categories")
+  .then((response) => response.json())
+  .then((categories) => {
+    // Une fois que vous avez reçu les catégories depuis l'API,
+    // parcourez-les et ajoutez-les à la liste déroulante.
+    categories.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id; // Remplacez par la valeur appropriée pour chaque catégorie
+      option.textContent = category.name; // Remplacez par le nom de la catégorie
+      categorySelect.appendChild(option);
+    });
+  })
+  .catch((error) =>
+    console.error("Erreur lors de la récupération des catégories :", error)
+  );
+
+// Écoutez les changements de sélection de la liste déroulante
+categorySelect.addEventListener("change", function () {
+  // Vous pouvez accéder à la catégorie sélectionnée avec categorySelect.value
+  // Par exemple, si vous voulez afficher la catégorie sélectionnée dans la console :
+  console.log("Catégorie sélectionnée :", categorySelect.value);
+});
 //Vérifications avant l'ajout de nouveaux travaux :
 
 const fileTooBig = document.querySelector(".file-too-big");
@@ -209,7 +236,7 @@ const imagePreviewContainer = document.querySelector(".ajout-photo");
 const image = new Image();
 const workCategory = document.querySelector(".inner-modal-form #category");
 const workTitle = document.querySelector(".inner-modal-form #title");
-const workImage = document.getElementById("fil e");
+const workImage = document.getElementById("file");
 const modalSubmit = document.querySelector(".modal-submit");
 
 //Verifier si la  taille ne dépasse pas les 4 mo
@@ -282,22 +309,6 @@ function clearModal() {
   modalSubmit.style.backgroundColor = "#A7A7A7";
 }
 
-//Supprimer toute la galerie
-const deleteAllButton = document.querySelector(".delete-all");
-deleteAllButton.addEventListener("click", deleteAllWorks);
-
-async function deleteAllWorks() {
-  const confirmation = confirm(
-    "Etes vous certain de vouloir supprimer tous les éléments de la gallerie ?"
-  );
-  if (confirmation) {
-    for (let work of data.works) {
-      await deleteWork(work.id);
-    }
-    data.works = [];
-    renderFigures();
-  }
-}
 // Faire apparaitre le formulaire au sein de la modale
 // Ajouter une fonction de prévisualisation de l'image (en remplaçant l'input par l'image)
 // Ajouter un écouteur d'événement sur le bouton d'ajout
