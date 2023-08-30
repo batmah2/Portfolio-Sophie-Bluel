@@ -18,10 +18,10 @@ function createFigureModal(imageURL, title, id) {
   return `
         <figure data-id="${id}" class="modal-flex">
            <div class="icon-flex">
-            <i class="move fa-solid fa-arrows-up-down-left-right"></i>
-            <i class="trash fa-solid fa-trash-can"></i>
+           <img id="moveIcon" class="move-icon" src="./assets/icons/Move.png" alt="move icon"></img>
+           <img id="trashIcon" class="trash-icon" src="./assets/icons/trash.png" alt="trash icon"></img>
           </div>
-          <img src="${imageURL}" alt="${title}">
+          <img class="modal-gallery-size" src="${imageURL}" alt="${title}">
           <figcaption>éditer</figcaption>
         </figure>
     `;
@@ -111,6 +111,7 @@ function createModalGallery(works) {
   });
   addDeletionEvents();
 }
+
 async function deleteWork(id) {
   const token = sessionStorage.getItem("token");
   if (token) {
@@ -136,7 +137,7 @@ async function deleteWork(id) {
 }
 
 function addDeletionEvents() {
-  const trashes = document.querySelectorAll(".fa-trash-can");
+  const trashes = document.querySelectorAll(".trash-icon");
   console.log(trashes);
   for (let trash of trashes) {
     trash.removeEventListener("click", deleteAndRenderWork);
@@ -237,7 +238,7 @@ const image = new Image();
 const workCategory = document.querySelector(".inner-modal-form #category");
 const workTitle = document.querySelector(".inner-modal-form #title");
 const workImage = document.getElementById("file");
-const modalSubmit = document.querySelector(".modal-submit");
+const modalSubmit = document.querySelector(".add-work");
 
 //Verifier si la  taille ne dépasse pas les 4 mo
 function validateFileSize(event) {

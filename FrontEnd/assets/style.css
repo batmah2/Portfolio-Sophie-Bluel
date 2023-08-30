@@ -24,6 +24,12 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
+modal figcaption {
+	display: block;
+    text-align: start;
+    margin-top: 2px;
+}
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -105,6 +111,7 @@ li a:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	padding: 17px 0px 50px 16px
 }
 .intro-logo {
 	display: none;
@@ -115,10 +122,11 @@ li a:hover {
 #introduction img {
 	display: block;
 	margin: auto;
-	width: 80%;
+	width: 474px;
 }
 #introduction article {
-	flex: 1
+	flex: 1;
+	margin: 0px 254px 0px 80px
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -129,6 +137,10 @@ li a:hover {
 }
 #portfolio h2 {
 	text-align: center;
+}
+.categories {	
+    width: 100%;
+    text-align: center;
 }
 .gallery {
 	width: 100%;
@@ -183,13 +195,15 @@ margin: auto;
 
 input[type="submit"]{
 	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin : 2em auto ;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px ;
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    margin: 2em auto;
+    width: 221px;
+    text-align: center;
+    border-radius: 60px;
+    padding: 10px 20px;
+    border: none;
 }
 
 footer nav ul {
@@ -199,6 +213,17 @@ footer nav ul {
 }
 
 /* style pour formulaire de connexion */
+.login-body .login-header main {
+	background-color: #FFFEF8;
+}
+.login-body p, li, label{
+	font-family: 'Work Sans';
+}
+.login-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
 #login {
 	width: 50%;
 margin: auto;
@@ -233,8 +258,13 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-/* style pour le mode édition */
 
+.forget-password {
+	text-align: center;
+	color: black;
+}
+
+/* style pour le mode édition */
 .flex-edition {
 	display: flex;
 	flex-direction: row;
@@ -249,7 +279,7 @@ margin: auto;
 .flex-edition-caption {
 	display: flex;
 	flex-direction: row;
-	gap: 10px;
+	gap: 0px;
 	margin-top: -35px;
 	justify-content: center;
 	padding: 10px;
@@ -261,6 +291,7 @@ margin: auto;
 	justify-content: center;
 	align-items: center;
 	gap: 15px;
+	margin: 0px 0px 20px;
 }
 .flex-modification {
 	display: flex;
@@ -302,8 +333,8 @@ margin: auto;
 }
 .position-caption {
 	position: absolute;
-	top: 320px;
-	right: 335px;
+	top: 386px;
+	right: 392px;
 }
 /* style pour la modale */
 .modal {
@@ -315,27 +346,36 @@ margin: auto;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
 }
+.modal figcaption {
+    text-align: start;
+    margin-top: 2px;
+}
 .openModal {
 	border: none;
 	background-color: white;
 	cursor: pointer;
 }
 .modal-content {
-    background-color: white;
+	background-color: white;
     margin: 7% auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #888;
-    max-width: 400px;
+    border-radius: 10px;
+    max-width: 630px;
     text-align: center;
-	position: relative;
+    position: relative;
+    height: 735px;
 }
 .modal-content h3{
-	font-size: 24px;
+	font-size: 26px;
+	padding: 15px 0px 35px;
 }
 .modal-submit {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+    color: white;
+    margin: 5px 35px 35px;
 }
 .modal-submit a{
 	color: red;
@@ -343,20 +383,27 @@ margin: auto;
 }
 .close-btn {
 	position: absolute;
-	top: 5px;
-	left: 410px;
-	font-size: 20px;
-	border: none;
-	background-color: white;
-	cursor: pointer;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
 }
 .modal-gallery {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 10px
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0px 80px 0px 100px;
+    justify-content: flex-start;
+    border-bottom: 1px solid #B3B3B3;
+    padding: 40px;
 }
-.modal-gallery img {
-	width: 75px;
+
+.modal-gallery-size {
+	width: 76px;
+	height: 113px;
+}
+#moveIcon {
+	width: 17px;
+	height: 17px;
 }
 .modal-flex {
 	display: flex;
@@ -364,110 +411,127 @@ margin: auto;
 	flex-wrap: wrap;
 	position: relative;
 }
+.deleteGallery {
+	color: red;
+}
 .icon-flex {
 	position: absolute;
 	right: 5px;
 	top: 5px;
 }
-.icon-flex i {
-	background-color: black;
-	color: white;
-	padding: 2px;
-	font-size: 11px;
-	border-radius: 2px;
+.move-icon {
+	width: 17px;
+	height: 17px;
 }
-
-
+.inner-modal-content {
+	background-color: white;
+    margin: 7% auto;
+    padding: 40px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    max-width: 630px;
+    text-align: center;
+    position: relative;
+    height: 735px;
+}
+.inner-modal-content h3 {	
+	font-size: 26px;
+	padding: 15px 0px 35px;
+}
+.return-btn {
+	position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+}	
 .inner-modal-form {
 	display: none;
 	position: fixed;
-	left: 600px;
-	height: 20%;
-	width: 20%;
-	padding: 40px 40px 175px;
-	background-color: white;
-	.ajout-photo {
-		width: 100%;
-		height: 169px;
-		background-color: #E8F1F6;
-		border-radius: 3px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		.image-logo {
-			width: 58px;
-			height: 58px;
-			color: #B9C5CC;
-			margin: 28px 0 19px;
-		}
-		.input-file {
-			background-color: #CBD6DC;
-			color: #306685;
-			border-radius: 50px;
-			padding: 10px 33px;
-			width: 173px;
-			height: 36px;
-			border: none;
-			margin-bottom: 7px;
-			cursor: pointer;
-		}
-		#file {
-			display: none;
-		}
-
-		.ajout-photo-text{
-			color: #444444;
-			padding: 0;
-			margin-bottom: 19px;
-		}
-		.uploaded-img {
-			padding-bottom: 10px;
-			width: 129px;
-			height: 169px;
-			object-fit: cover;
-		}
-		.file-too-big {
-			display: none;
-			padding-bottom: 25px;
-			margin-bottom: 10px;
-		}
-	}
-	.inner-modal-form-inputs {
-		display: flex;
-		flex-direction: column;
-		padding: 30px 0 47px;
-		border-bottom: solid 1px #B3B3B3;
-		label {
-			text-align: initial;
-			margin-bottom: 10px;
-		}
-		input {
-			width: 100%;
-		}
-		.input-categorie {
-			margin-top: 20px;
-		}
-		#category {
-			width: 424px;
-			height: 52px;
-			font-size: 1.2em;
-			border: none;
-			box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-			-webkit-appearance: none;
-			-moz-appearance: none;
-			appearance: none;
-			background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuJeEpIJXCso4miG5k7xuvGE-2RcfXriKHfw&usqp=CAU');
-			background-repeat: no-repeat;
-			background-size: 20px;
-			background-position: right 15px top 24px;
-			padding: 15px;
-		}
-	}
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
 }
-.modal-submit {
-	background-color: #A7A7A7;
-	color: white;
+.ajout-photo {
+	width: 100%;
+	height: 169px;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.image-logo {
+	width: 58px;
+	height: 58px;
+	color: #B9C5CC;
+	margin: 28px 0 19px;
+}
+.input-file {
+	background-color: #CBD6DC;
+	color: #306685;
+	border-radius: 50px;
+	padding: 10px 33px;
+	width: 173px;
 	height: 36px;
+	border: none;
+	margin-bottom: 7px;
+	cursor: pointer;
 }
-    
+#file {
+	display: none;
+}
+
+.ajout-photo-text{
+	color: #444444;
+	padding: 0;
+	margin-bottom: 19px;
+}
+.uploaded-img {
+	padding-bottom: 10px;
+	width: 129px;
+	height: 169px;
+	object-fit: cover;
+}
+.file-too-big {
+	display: none;
+	padding-bottom: 25px;
+	margin-bottom: 10px;
+}
+
+.inner-modal-form-inputs {
+display: flex;
+flex-direction: column;
+padding: 30px 0 47px;
+border-bottom: solid 1px #B3B3B3;
+}
+label {
+	text-align: initial;
+	margin-bottom: 10px;
+}
+input {
+	width: 100%;			
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09)
+}
+input #title {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.input-categorie {
+	margin-top: 20px;
+}
+
+.input-categorie-style{
+height: 50px;
+font-size: 1.2em;
+border: none;
+box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}

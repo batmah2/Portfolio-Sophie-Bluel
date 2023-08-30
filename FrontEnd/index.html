@@ -55,7 +55,7 @@
 	</section>
 	<div id="modal" class="modal">
         <div class="modal-content">
-			<button  class="close-btn" id="closeModalBtn"><i class="fa-solid fa-x"></i></button>
+			<img class="close-btn" id="closeModalBtn" src="./assets/icons/xmark.png"></img>
             <h3>Galerie photo</h3>
 			<div class="modal-gallery">
 			</div>
@@ -63,25 +63,32 @@
 				<input type="submit" class="openInnerModal" value="Ajouter une photo">
 				<p class="deleteGallery">Supprimer la galerie</p>
 			</div>
-        </div>		
+        </div>
     </div>
 	<form class="inner-modal-form" method="post">
-		<div class="ajout-photo">
-			<img class="image-logo" src="./assets/images/picture-svgrepo-com.svg" alt="logo-image">
-			<label class="input-file" for="file">+ Ajouter photo</label>
-			<input type="file" id="file" name="image" accept=".jpg, .png" onchange="validateFileSize(event)" required>
-			<p class="ajout-photo-text">jpg, png : 4mo max</p>
-			<p class="file-too-big">La taille du fichier dépasse la limite de 4 Mo.</p>
+		<div class="inner-modal-content">
+			<img class="close-btn" id="closeModalBtn" src="./assets/icons/xmark.png"></img>
+			<img class="return-btn" src="./assets/icons/arrow-left.png" alt="arrow-left-icon">
+            <h3>Galerie photo</h3>
+			<div class="ajout-photo">
+				<img class="image-logo" src="assets/icons/picture-svgrepo-com 1.png" alt="logo-image">
+				<label class="input-file" for="file">+ Ajouter photo</label>
+				<input type="file" id="file" name="image" accept=".jpg, .png" onchange="validateFileSize(event)" required>
+				<p class="ajout-photo-text">jpg, png : 4mo max</p>
+				<p class="file-too-big">La taille du fichier dépasse la limite de 4 Mo.</p>
+			</div>
+			<div class="inner-modal-form-inputs">
+				<label for="title">Titre</label>
+				<input type="text" name="title" id="title" autocomplete="on" required>
+				<label class="input-categorie" for="category">Catégorie</label>
+				<select name="category" id="category" class="input-categorie-style" required>
+					<option value="0" disabled selected></option>
+				</select>
+			</div>
+			<div class="modal-submit">
+				<input class="add-work" type="submit" value="Valider">
+			</div>
 		</div>
-		<div class="inner-modal-form-inputs">
-			<label for="title">Titre</label>
-			<input type="text" name="title" id="title" autocomplete="on" required>
-			<label class="input-categorie" for="category">Catégorie</label>
-			<select name="category" id="category" required>
-				<option value="0" disabled selected>---</option>
-			</select>
-		</div>
-		<input class="modal-submit" type="submit" value="Valider">
 	</form>	
 	<section id="portfolio">
 		<div class="flex-edition-project">
