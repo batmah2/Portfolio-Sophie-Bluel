@@ -18,7 +18,7 @@ function createFigureModal(imageURL, title, id) {
   return `
         <figure data-id="${id}" class="modal-flex">
            <div class="icon-flex">
-           <img id="moveIcon" class="move-icon" src="./assets/icons/Move.png" alt="move icon"></img>
+           <img id="moveIcon" class="move-icon hidden-icon" src="./assets/icons/Move.png" alt="move icon"></img>
            <img id="trashIcon" class="trash-icon" src="./assets/icons/trash.png" alt="trash icon"></img>
           </div>
           <img class="modal-gallery-size" src="${imageURL}" alt="${title}">
@@ -26,9 +26,9 @@ function createFigureModal(imageURL, title, id) {
         </figure>
     `;
 }
-function createInput(name, id) {
+function createInput(name, id, filterClass) {
   return `
-    <input type="submit" value="${name}" data-id="${id}"> 
+    <input type="submit" data-id="${id}" class="${filterClass}" value="${name}">
   `;
 }
 
@@ -62,7 +62,7 @@ function addDynamicFilter() {
       console.log(data);
       for (let categorie of data) {
         const categories = document.querySelector(".categories");
-        categories.innerHTML += createInput(categorie.name, categorie.id);
+        categories.innerHTML += createInput(categorie.name, categorie.id, "filter");
       }
       addEventFilter();
     })
@@ -81,7 +81,6 @@ function addEventFilter() {
     filter.addEventListener("click", filterCategory);
   }
 }
-
 function filterCategory(event) {
   const id = Number(event.target.dataset.id);
   if (id) {

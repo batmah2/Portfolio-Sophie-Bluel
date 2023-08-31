@@ -37,15 +37,17 @@
 </header>
 <main>
 	<section id="introduction">
-		<div class="position-intro">
+		<h2 class="hiddenTitle">Sophie Bluel</h2>
+		<article class="position-intro">
+			<h3 class="hiddenTitle">Architecte</h3>
 			<figure class="img-width">
 				<img class="intro-logo" src="./assets/images/sophie-bluel.png" alt="">
-			</figure>
-			<figcaption class="edition-mod flex-edition-caption position-caption">
+				<figcaption class="edition-mod flex-edition-caption position-caption">
 					<i class="fa-regular fa-pen-to-square"></i>
 					<button class="openModal">Modifier</button>
-			</figcaption>
-		</div>
+				</figcaption>
+			</figure>
+		</article>
 		<article>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
@@ -55,7 +57,7 @@
 	</section>
 	<div id="modal" class="modal">
         <div class="modal-content">
-			<img class="close-btn" id="closeModalBtn" src="./assets/icons/xmark.png"></img>
+			<img class="close-btn" id="closeModalBtn" src="./assets/icons/xmark.png" alt="close-icon-icon">
             <h3>Galerie photo</h3>
 			<div class="modal-gallery">
 			</div>
@@ -67,11 +69,11 @@
     </div>
 	<form class="inner-modal-form" method="post">
 		<div class="inner-modal-content">
-			<img class="close-btn" id="closeModalBtn" src="./assets/icons/xmark.png"></img>
+			<img class="close-btn" id="closeInnerModalBtn" src="./assets/icons/xmark.png" alt="close-modal-icon">
 			<img class="return-btn" src="./assets/icons/arrow-left.png" alt="arrow-left-icon">
             <h3>Galerie photo</h3>
 			<div class="ajout-photo">
-				<img class="image-logo" src="assets/icons/picture-svgrepo-com 1.png" alt="logo-image">
+				<img class="image-logo" src="./assets/icons/picture-svgrepo-com-1.png" alt="logo-image">
 				<label class="input-file" for="file">+ Ajouter photo</label>
 				<input type="file" id="file" name="image" accept=".jpg, .png" onchange="validateFileSize(event)" required>
 				<p class="ajout-photo-text">jpg, png : 4mo max</p>
@@ -82,7 +84,7 @@
 				<input type="text" name="title" id="title" autocomplete="on" required>
 				<label class="input-categorie" for="category">Catégorie</label>
 				<select name="category" id="category" class="input-categorie-style" required>
-					<option value="0" disabled selected></option>
+					<option value="" label="filter" disabled selected></option>
 				</select>
 			</div>
 			<div class="modal-submit">

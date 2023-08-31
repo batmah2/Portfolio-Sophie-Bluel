@@ -16,13 +16,6 @@ closeModalBtn.forEach(button => {
     innerModal.style.display = "none";
     });
 });
-let moveIconActive = document.querySelectorAll(".move-icon")
-let activateMoveIcon = document.querySelectorAll(".modal-gallery-size")
-
-image.addEventListener("mouseover", function() {
-    moveIconActive.style.display= "block";
-})
-
 
 let openInnerModalButtons = document.querySelectorAll('.openInnerModal')
 console.log(openInnerModalButtons);
