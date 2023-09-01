@@ -18,7 +18,6 @@ closeModalBtn.forEach(button => {
 });
 
 let openInnerModalButtons = document.querySelectorAll('.openInnerModal')
-console.log(openInnerModalButtons);
 const innerModal = document.querySelector(".inner-modal-form");
 openInnerModalButtons.forEach(button => {
     button.addEventListener("click", function () {

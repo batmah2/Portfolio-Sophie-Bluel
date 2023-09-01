@@ -1,4 +1,4 @@
-let works;
+let works = [];
 
 /**
  * Fonction to create a figure element.
@@ -59,10 +59,13 @@ function addDynamicFilter() {
   fetch("http://localhost:5678/api/categories")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       for (let categorie of data) {
         const categories = document.querySelector(".categories");
-        categories.innerHTML += createInput(categorie.name, categorie.id, "filter");
+        categories.innerHTML += createInput(
+          categorie.name,
+          categorie.id,
+          "filter"
+        );
       }
       addEventFilter();
     })
@@ -76,7 +79,6 @@ function addDynamicFilter() {
 
 function addEventFilter() {
   const filters = document.querySelectorAll(".categories input[type='submit']");
-  console.log(filters);
   for (let filter of filters) {
     filter.addEventListener("click", filterCategory);
   }
@@ -102,7 +104,6 @@ function createWorks(works) {
 
 function createModalGallery(works) {
   const modalGallery = document.querySelector(".modal-gallery");
-  console.log(modalGallery);
   modalGallery.innerHTML = "";
   works.forEach(({ imageUrl, title, id }) => {
     const figureModal = createFigureModal(imageUrl, title, id);
@@ -123,7 +124,6 @@ async function deleteWork(id) {
       });
 
       if (response.ok) {
-        console.log(`Travaux contenant l'ID ${id} supprimer avec succès.`);
       } else {
         console.error(`suppression du travail contenant l'ID ${id} échoué.`);
       }
@@ -137,7 +137,6 @@ async function deleteWork(id) {
 
 function addDeletionEvents() {
   const trashes = document.querySelectorAll(".trash-icon");
-  console.log(trashes);
   for (let trash of trashes) {
     trash.removeEventListener("click", deleteAndRenderWork);
     trash.addEventListener("click", deleteAndRenderWork);
@@ -147,7 +146,6 @@ function addDeletionEvents() {
 
 async function deleteAndRenderWork() {
   const { id } = this.parentElement.parentElement.dataset;
-  console.log(id);
   await deleteWork(id);
   document.querySelector(`.modal-gallery figure[data-id="${id}"]`).remove();
   document.querySelector(`.gallery figure[data-id="${id}"]`).remove();
@@ -197,7 +195,7 @@ form.addEventListener("submit", async function (e) {
   const formData = new FormData(form);
   const work = await createWork(formData);
   works.push(work);
-  createGallery(work);
+  createWorks(works);
   createModalGallery();
   clearModal();
 });
@@ -227,7 +225,6 @@ fetch("http://localhost:5678/api/categories")
 categorySelect.addEventListener("change", function () {
   // Vous pouvez accéder à la catégorie sélectionnée avec categorySelect.value
   // Par exemple, si vous voulez afficher la catégorie sélectionnée dans la console :
-  console.log("Catégorie sélectionnée :", categorySelect.value);
 });
 //Vérifications avant l'ajout de nouveaux travaux :
 
@@ -298,7 +295,6 @@ function validateInputs() {
 
 //Ferme et vide la modale après validation pour un nouvel ajout
 function clearModal() {
-  secondModal.style.display = "none";
   imagePreviewContainer.removeChild(image);
   for (let child of imagePreviewContainer.children) {
     child.style.display = "block";
@@ -309,22 +305,14 @@ function clearModal() {
   modalSubmit.style.backgroundColor = "#A7A7A7";
 }
 
-// Faire apparaitre le formulaire au sein de la modale
-// Ajouter une fonction de prévisualisation de l'image (en remplaçant l'input par l'image)
-// Ajouter un écouteur d'événement sur le bouton d'ajout
-// Dans la fonction de callback, récupérer les données du formulaire (FormData)
-// Envoyer les données au serveur
-
 // AFFICHER LE MODE EDITION UNIQUEMENT POUR UN UTILISATEUR CONNECTE
 function checkToken() {
   const token = sessionStorage.getItem("token");
-  console.log(token);
   if (token) {
     activateEditionMode();
   }
 }
 function activateEditionMode() {
-  console.log("Mode édition activé");
   const logoutLink = document.getElementById("logout-link");
   logoutLink.style.display = "block";
   logoutLink.addEventListener("click", logout);

@@ -99,6 +99,7 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
 nav li a {
 	text-decoration: none;
@@ -199,6 +200,7 @@ margin: auto;
 	background-color: white!important;	
 	color: #1d6154!important;
 	border: 1px solid #1D6154!important;
+	cursor: pointer;
 }
 
 .filter:hover{
@@ -218,6 +220,7 @@ input[type="submit"]{
     border-radius: 60px;
     padding: 10px 20px;
     border: none;
+	cursor: pointer;
 }
 
 footer nav ul {
@@ -378,7 +381,7 @@ margin: auto;
     max-width: 630px;
     text-align: center;
     position: relative;
-    height: 735px;
+    max-height: 840px;
 }
 .modal-content h3{
 	font-size: 26px;
@@ -400,6 +403,9 @@ margin: auto;
     top: 20px;
     right: 20px;
     cursor: pointer;
+}
+.trash-icon{
+	cursor: pointer;
 }
 .modal-gallery {
 	display: flex;
@@ -435,6 +441,7 @@ display: block;
 }
 .deleteGallery {
 	color: red;
+	cursor: pointer;
 }
 .icon-flex {
 	position: absolute;
