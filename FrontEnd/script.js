@@ -302,9 +302,10 @@ function clearModal() {
   fileTooBig.style.display = "none";
   workTitle.value = "";
   workCategory.value = "";
-  modalSubmit.style.backgroundColor = "#A7A7A7";
+  modalSubmit.style.backgroundColor = "#A7A7A7"; 
+  form.style.display = "none";
+  document.getElementById("modal").style.display = "block";
 }
-
 // AFFICHER LE MODE EDITION UNIQUEMENT POUR UN UTILISATEUR CONNECTE
 function checkToken() {
   const token = sessionStorage.getItem("token");
