@@ -415,13 +415,9 @@ margin: auto;
     justify-content: flex-start;
     border-bottom: 1px solid #B3B3B3;
     padding: 40px;
-	overflow: scroll;
 	max-height: 450px;
-	::-webkit-scrollbar {
-		width: 0;
-		background: transparent; /* make scrollbar transparent */
 }
-}
+
 
 .modal-gallery-size {
 	width: 76px;
