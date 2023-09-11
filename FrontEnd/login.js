@@ -43,6 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("Statut : ", response.status);
                 const error = await response.json();
                 console.error("Une erreur s'est produite :", error.message);
+                //ajout du message d'erreur dans le DOM 
+                const errorMessage = document.querySelector('.error-message')
+                errorMessage.style.display = "block";
             }
         } catch (error) {
             // En cas d'erreur pendant la requête, affiche l'erreur dans la console.

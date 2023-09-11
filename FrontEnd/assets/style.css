@@ -230,6 +230,12 @@ footer nav ul {
 }
 
 /* style pour formulaire de connexion */
+.error-message {
+	color: red;
+	text-align: center;
+	font-size: large;
+	display: none;
+}
 .login-body .login-header main {
 	background-color: #FFFEF8;
 }
