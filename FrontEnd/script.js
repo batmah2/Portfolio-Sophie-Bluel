@@ -42,7 +42,7 @@ function getWorksWithThen() {
   fetch("http://localhost:5678/api/works") // Appel de la fonction fetch avec pour param l'url de l'API
     .then((response) => response.json()) // Extraction du contenu du body JSON de la réponse
     .then((data) => {
-      // Loop tout les travaux et crée uen figure pour chacun :
+      // Loop tout les travaux et crée une figure pour chacun :
       works = data;
       createWorks(works);
       createModalGallery(works); // Loop les travaux mais dans la gallery de la modal

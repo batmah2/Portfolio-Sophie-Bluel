@@ -416,6 +416,15 @@ margin: auto;
     border-bottom: 1px solid #B3B3B3;
     padding: 40px;
 	max-height: 450px;
+	overflow-y: scroll;
+}
+.modal-gallery::-webkit-scrollbar {
+	width: 0.1em;
+	background-color: transparent;
+}
+
+.modal-gallery::-webkit-scrollbar-thumb {
+	background-color: transparent;
 }
 
 
